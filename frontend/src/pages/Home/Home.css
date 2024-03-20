@@ -1,0 +1,4 @@
+.area {
+    border: 1px solid #000; /* Black border for visibility */
+    position: absolute; /* Positioning relative to the flag image */
+  }
