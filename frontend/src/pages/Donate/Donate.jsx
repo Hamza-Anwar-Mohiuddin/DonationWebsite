@@ -10,49 +10,43 @@ import Button from '@mui/material/Button';
 function Donate() {
   const [selectedOption, setSelectedOption] = useState('');
   const [amount, setAmount] = useState(0);
-  const [numPixels, setNumPixels] = useState('');
+  const [numPixels, setNumPixels] = useState('2');
   const [isNumPixelFieldEnabled, setIsNumPixelFieldEnabled] = useState(false);
   const [isFormSubmitted, setIsFormSubmitted] = useState(false);
   const [name, setName] = useState('');
   const [message, setMessage] = useState('');
   const [isSubmitEnabled, setIsSubmitEnabled] = useState(false);
 
-
-  const ClusterPixels = "Cluster Of Pixels"
-  const OnePixel = "One Pixel"
-  const FullFlag = "Full Flag"
+  const ClusterPixels = "Cluster Of Pixels";
+  const OnePixel = "One Pixel";
+  const FullFlag = "Full Flag";
 
   const handleCheckboxChange = (event) => {
     const value = event.target.value;
-    // Toggle the selected state of the checkbox
     setSelectedOption(selectedOption === value ? '' : value);
-    // Enable or disable the submit button based on the selected option
     setIsSubmitEnabled(selectedOption === value ? false : true);
-  
-    // Update amount and other state based on the selected option
+
     if (value === OnePixel) {
       setAmount(5);
     } else if (value === FullFlag) {
       setAmount(1000000 * 5);
-    } else {
-      setAmount(0);
-    }
-    if (value === ClusterPixels) {
+    } else if (value === ClusterPixels) {
       setIsNumPixelFieldEnabled(true);
+      setAmount(numPixels * 5);
     } else {
       setIsNumPixelFieldEnabled(false);
-      setNumPixels('');
+      setAmount(0);
     }
   };
 
   const handleNumPixelsChange = (event) => {
     const numPixelsValue = parseInt(event.target.value);
-    if (!isNaN(numPixelsValue) && numPixelsValue >= 0) {
+    if (!isNaN(numPixelsValue) && numPixelsValue >= 2) {
       setNumPixels(numPixelsValue.toString());
       setAmount(numPixelsValue * 5);
     } else {
-      setNumPixels('');
-      setAmount(0);
+      setNumPixels('2');
+      setAmount(numPixels*5);
     }
   };
 
@@ -60,14 +54,13 @@ function Donate() {
     if (selectedOption) {
       setIsFormSubmitted(true);
     } else {
-      alert("kindly select some value")
+      alert("Kindly select some value");
     }
   };
 
   const handleReturnToForm = () => {
     setIsFormSubmitted(false);
   };
-
   return (
     <>
       <div className='Donate-page-top-div'>
@@ -75,7 +68,7 @@ function Donate() {
           Donate Online
         </h1>
         <hr />
-        <p> 
+        <p>
           Your support has empowered us to transform the lives of countless talented and deserving individuals. Our team stands ready to assist you in directing your contribution. Regardless of your location, you can donate to NED today.
         </p>
       </div>
@@ -120,7 +113,7 @@ function Donate() {
                   <FormControlLabel
                     control={
                       <Checkbox
-                        style={{ color: 'green' }}
+                        style={{ color: 'green', fontSize: "4rem" }}
                         value={FullFlag}
                         checked={selectedOption === FullFlag}
                         onChange={handleCheckboxChange}
@@ -150,7 +143,7 @@ function Donate() {
                     control={
                       <Checkbox
                         style={{ color: 'green' }}
-                        value= {ClusterPixels}
+                        value={ClusterPixels}
                         checked={selectedOption === ClusterPixels}
                         onChange={handleCheckboxChange}
                       />
@@ -187,9 +180,9 @@ function Donate() {
             </div>
           </div>
           <div className='Donate-page-form-submit'>
-          <Button  onClick={handleSubmit} disabled={!isSubmitEnabled}>Submit</Button>
+            <Button onClick={handleSubmit} disabled={!isSubmitEnabled}>Submit</Button>
           </div>
-          
+
         </div>
       ) : (
         <div className='Donate-page-post-submit-form-parent-div'>

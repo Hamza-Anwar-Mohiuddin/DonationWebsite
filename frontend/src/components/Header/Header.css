@@ -11,11 +11,11 @@
 .nav-link {
   display: inline-block;
   position: relative;
-  color: var(--secondary-color) !important;
+  color: black !important;
   font-family: var(--body-font);
   font-weight: 600 !important;
-  margin: 0 1rem !important;
-  font-size: 1.1rem !important;
+  margin: 0 0.5rem !important;
+  font-size: 0.8rem !important;
 }
 .nav-link::after {
   content: "";
@@ -25,7 +25,7 @@
   height: 2px;
   bottom: 0;
   left: 0;
-  background-color: #0087ca;
+  background-color: var(--primary-color);
   transform-origin: bottom center;
   transition: transform 0.25s ease-out;
 }
@@ -44,5 +44,5 @@
   height: 2px;
   bottom: 0;
   left: 0;
-  background-color: #0087ca;
+  background-color: var(--primary-color);
 }
