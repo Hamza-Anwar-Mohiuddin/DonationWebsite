@@ -1,11 +1,11 @@
-// Donate.js
-import { useState } from 'react';
+import React, { useState } from 'react';
 import './Donate.css';
 import TextField from '@mui/material/TextField';
 import FormGroup from '@mui/material/FormGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
 import Button from '@mui/material/Button';
+import axios from 'axios';
 
 function Donate() {
   const [selectedOption, setSelectedOption] = useState('');
@@ -46,7 +46,7 @@ function Donate() {
       setAmount(numPixelsValue * 5);
     } else {
       setNumPixels('2');
-      setAmount(numPixels*5);
+      setAmount(2 * 5); // Defaulting to 2 pixels if invalid input
     }
   };
 
@@ -58,9 +58,48 @@ function Donate() {
     }
   };
 
+const handleSubmitform = () => {
+  if (selectedOption) {
+    let postData = {
+      selectedOption: selectedOption,
+      amount: amount,
+      name: name,
+      message: message
+    };
+
+    if (selectedOption === OnePixel) {
+      postData.numPixels = 1;
+    } else if (selectedOption === FullFlag) {
+      postData.numPixels = 100;
+    } else if (selectedOption === ClusterPixels) {
+      postData.numPixels = numPixels;
+    }
+
+    axios.post('http://localhost:3000/donate', postData)
+      .then(response => {
+        if (response.status === 201) {
+          console.log('Donation submitted successfully!');
+          setIsFormSubmitted(true);
+          alert("Form submitted successfully!");
+          setIsFormSubmitted(false);
+        } else {
+          throw new Error('Failed to submit donation');
+        }
+      })
+      .catch(error => {
+        console.error('Error submitting donation:', error);
+        alert('Failed to submit donation. Please try again.');
+      });
+  } else {
+    alert("Kindly select some value");
+  }
+};
+
+  
   const handleReturnToForm = () => {
     setIsFormSubmitted(false);
   };
+
   return (
     <>
       <div className='Donate-page-top-div'>
@@ -162,69 +201,68 @@ function Donate() {
                   InputProps={{
                     disabled: !isNumPixelFieldEnabled,
                     className: selectedOption !== ClusterPixels ? 'TextField-disabled' : ''
+                 
                   }}
-                />
+                  />
+                </div>
+                <div className='Donate-page-form-field'>
+                  <TextField
+                    id="ClusterPixels"
+                    label="Amount in USD"
+                    value={selectedOption === ClusterPixels ? amount : ''}
+                    InputProps={{
+                      readOnly: true,
+                      disabled: selectedOption !== ClusterPixels,
+                      className: selectedOption !== ClusterPixels ? 'TextField-disabled' : ''
+                    }}
+                  />
+                </div>
               </div>
-              <div className='Donate-page-form-field'>
-                <TextField
-                  id="ClusterPixels"
-                  label="Amount in USD"
-                  value={selectedOption === ClusterPixels ? amount : ''}
-                  InputProps={{
-                    readOnly: true,
-                    disabled: selectedOption !== ClusterPixels,
-                    className: selectedOption !== ClusterPixels ? 'TextField-disabled' : ''
-                  }}
-                />
+            </div>
+            <div className='Donate-page-form-submit'>
+              <Button onClick={handleSubmit} disabled={!isSubmitEnabled}>Submit</Button>
+            </div>
+          </div>
+        ) : (
+          <div className='Donate-page-post-submit-form-parent-div'>
+            <h4>Thank you for your donation.</h4>
+            <p>You are donating <span>{selectedOption}</span> and your bill is <span>{amount}$</span></p>
+            <hr />
+            <div className='Donate-page-post-submit-form'>
+              <TextField
+                id="name"
+                label="Name"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+              />
+              <TextField
+                id="message"
+                label={`Message (Up to 100 words${message.trim().length > 0 ? ` - ${message.trim().split(/\s+/).length}` : ''})`}
+                multiline
+                rows={4}
+                value={message}
+                onChange={(e) => {
+                  const inputValue = e.target.value;
+                  console.log(inputValue);
+                  const wordCount = inputValue.trim().split(/\s+/).length;
+                  setMessage(inputValue);
+                  if (wordCount > 100) {
+                    document.getElementById('message-label').style.color = 'red';
+                  } else {
+                    document.getElementById('message-label').style.color = 'inherit';
+                  }
+                }}
+              />
+              <div className="form-submit-form">
+                <Button variant="contained" onClick={handleReturnToForm}>Return to Form</Button>
+                <Button variant="contained" onClick={handleSubmitform}>Submit</Button>
               </div>
             </div>
           </div>
-          <div className='Donate-page-form-submit'>
-            <Button onClick={handleSubmit} disabled={!isSubmitEnabled}>Submit</Button>
-          </div>
-
-        </div>
-      ) : (
-        <div className='Donate-page-post-submit-form-parent-div'>
-          <h4>Thankyou for your donation.</h4>
-          <p>You are donating <span>{selectedOption}</span> and your bill is <span>{amount}$</span></p>
-          <hr />
-          <div className='Donate-page-post-submit-form'>
-            <TextField
-              id="name"
-              label="Name"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-            />
-            <TextField
-              id="message"
-              label={`Message (Up to 100 words${message.trim().length > 0 ? ` - ${message.trim().split(/\s+/).length}` : ''})`}
-              multiline
-              rows={4}
-              value={message}
-              onChange={(e) => {
-                const inputValue = e.target.value;
-                const wordCount = inputValue.trim().split(/\s+/).length;
-                setMessage(inputValue);
-                if (wordCount > 100) {
-                  document.getElementById('message-label').style.color = 'red';
-                } else {
-                  document.getElementById('message-label').style.color = 'inherit';
-                }
-              }}
-            />
-
-
-            <div className="form-submit-form">
-              <Button variant="contained" onClick={handleReturnToForm}>Return to Form</Button>
-              <Button variant="contained" onClick={handleReturnToForm}>Submit</Button>
-            </div>
-
-          </div>
-        </div>
-      )}
-    </>
-  );
-}
-
-export default Donate;
+        )}
+      </>
+    );
+  }
+  
+  export default Donate;
+  

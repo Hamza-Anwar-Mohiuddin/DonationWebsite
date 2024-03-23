@@ -1,0 +1,23 @@
+/* Add this CSS in your global CSS file or component-specific CSS file */
+
+.donors-table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  .donors-table th,
+  .donors-table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+  }
+  
+  .donors-table th {
+    background-color: #f2f2f2;
+    font-weight: bold;
+  }
+  
+  .donors-table tbody tr:nth-child(even) {
+    background-color: #f2f2f2;
+  }
+  
