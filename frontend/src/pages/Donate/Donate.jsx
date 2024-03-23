@@ -17,6 +17,11 @@ function Donate() {
   const [message, setMessage] = useState('');
   const [isSubmitEnabled, setIsSubmitEnabled] = useState(false);
 
+
+  const ClusterPixels = "Cluster Of Pixels"
+  const OnePixel = "One Pixel"
+  const FullFlag = "Full Flag"
+
   const handleCheckboxChange = (event) => {
     const value = event.target.value;
     // Toggle the selected state of the checkbox
@@ -25,14 +30,14 @@ function Donate() {
     setIsSubmitEnabled(selectedOption === value ? false : true);
   
     // Update amount and other state based on the selected option
-    if (value === "1pixel") {
+    if (value === OnePixel) {
       setAmount(5);
-    } else if (value === "FullFlag") {
+    } else if (value === FullFlag) {
       setAmount(1000000 * 5);
     } else {
       setAmount(0);
     }
-    if (value === "ClusterPixels") {
+    if (value === ClusterPixels) {
       setIsNumPixelFieldEnabled(true);
     } else {
       setIsNumPixelFieldEnabled(false);
@@ -87,24 +92,24 @@ function Donate() {
                     control={
                       <Checkbox
                         style={{ color: 'green' }}
-                        value="1pixel"
-                        checked={selectedOption === "1pixel"}
+                        value={OnePixel}
+                        checked={selectedOption === OnePixel}
                         onChange={handleCheckboxChange}
                       />
                     }
-                    label={<span className={selectedOption !== "1pixel" ? 'checkbox-label-disabled' : 'checkbox-label'}>Donate One Pixel</span>}
+                    label={<span className={selectedOption !== OnePixel ? 'checkbox-label-disabled' : 'checkbox-label'}>Donate One Pixel</span>}
                   />
                 </FormGroup>
               </div>
               <div className='Donate-page-form-field'>
                 <TextField
-                  id="1pixel"
+                  id={OnePixel}
                   label="Amount in USD"
-                  value={selectedOption === "1pixel" ? amount : ''}
+                  value={selectedOption === OnePixel ? amount : ''}
                   InputProps={{
                     readOnly: true,
-                    disabled: selectedOption !== "1pixel",
-                    className: selectedOption !== "1pixel" ? 'TextField-disabled' : ''
+                    disabled: selectedOption !== OnePixel,
+                    className: selectedOption !== OnePixel ? 'TextField-disabled' : ''
                   }}
                 />
               </div>
@@ -116,24 +121,24 @@ function Donate() {
                     control={
                       <Checkbox
                         style={{ color: 'green' }}
-                        value="FullFlag"
-                        checked={selectedOption === "FullFlag"}
+                        value={FullFlag}
+                        checked={selectedOption === FullFlag}
                         onChange={handleCheckboxChange}
                       />
                     }
-                    label={<span className={selectedOption !== "FullFlag" ? 'checkbox-label-disabled' : 'checkbox-label'}>Donate Full Flag</span>}
+                    label={<span className={selectedOption !== FullFlag ? 'checkbox-label-disabled' : 'checkbox-label'}>Donate Full Flag</span>}
                   />
                 </FormGroup>
               </div>
               <div className='Donate-page-form-field'>
                 <TextField
-                  id="FullFlag"
+                  id={FullFlag}
                   label="Amount in USD"
-                  value={selectedOption === "FullFlag" ? amount : ''}
+                  value={selectedOption === FullFlag ? amount : ''}
                   InputProps={{
                     readOnly: true,
-                    disabled: selectedOption !== "FullFlag",
-                    className: selectedOption !== "FullFlag" ? 'TextField-disabled' : ''
+                    disabled: selectedOption !== FullFlag,
+                    className: selectedOption !== FullFlag ? 'TextField-disabled' : ''
                   }}
                 />
               </div>
@@ -145,12 +150,12 @@ function Donate() {
                     control={
                       <Checkbox
                         style={{ color: 'green' }}
-                        value="ClusterPixels"
-                        checked={selectedOption === "ClusterPixels"}
+                        value= {ClusterPixels}
+                        checked={selectedOption === ClusterPixels}
                         onChange={handleCheckboxChange}
                       />
                     }
-                    label={<span className={selectedOption !== "ClusterPixels" ? 'checkbox-label-disabled' : 'checkbox-label'}>Donate Cluster of Pixels</span>}
+                    label={<span className={selectedOption !== ClusterPixels ? 'checkbox-label-disabled' : 'checkbox-label'}>Donate Cluster of Pixels</span>}
                   />
                 </FormGroup>
               </div>
@@ -163,7 +168,7 @@ function Donate() {
                   onChange={handleNumPixelsChange}
                   InputProps={{
                     disabled: !isNumPixelFieldEnabled,
-                    className: selectedOption !== "ClusterPixels" ? 'TextField-disabled' : ''
+                    className: selectedOption !== ClusterPixels ? 'TextField-disabled' : ''
                   }}
                 />
               </div>
@@ -171,11 +176,11 @@ function Donate() {
                 <TextField
                   id="ClusterPixels"
                   label="Amount in USD"
-                  value={selectedOption === "ClusterPixels" ? amount : ''}
+                  value={selectedOption === ClusterPixels ? amount : ''}
                   InputProps={{
                     readOnly: true,
-                    disabled: selectedOption !== "ClusterPixels",
-                    className: selectedOption !== "ClusterPixels" ? 'TextField-disabled' : ''
+                    disabled: selectedOption !== ClusterPixels,
+                    className: selectedOption !== ClusterPixels ? 'TextField-disabled' : ''
                   }}
                 />
               </div>
@@ -189,7 +194,7 @@ function Donate() {
       ) : (
         <div className='Donate-page-post-submit-form-parent-div'>
           <h4>Thankyou for your donation.</h4>
-          <p>You are donating <span>{selectedOption}</span> and your bill is <span>{amount}</span></p>
+          <p>You are donating <span>{selectedOption}</span> and your bill is <span>{amount}$</span></p>
           <hr />
           <div className='Donate-page-post-submit-form'>
             <TextField
