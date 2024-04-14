@@ -1,20 +1,22 @@
-import React from 'react';
-import './TriangleGraph.css'; // Import CSS file for styling
-import icon from '../assets/man.png'; // Import the image icon
+import React, { Component } from 'react';
+import './TriangleGraph.css';
+import icon from '../assets/man.png';
+import axios from 'axios';
 
-class TriangleGraph extends React.Component {
+class TriangleGraph extends Component {
   constructor(props) {
     super(props);
     this.state = {
       dots: [],
-      donationPercentage: 25, // Set the initial donation percentage to 50%
+      donationPercentage: 0 // Initialize with 0, will be updated after fetching from backend
     };
   }
 
   componentDidMount() {
     // Generate dots in a triangular pattern
+    this.fetchDonationPercentage();
     const dots = [];
-    const rows = 15; // Reduce the number of rows for a smaller graph
+    const rows = 24; // Number of rows in the triangle
     let count = 0;
     for (let row = 1; row <= rows; row++) {
       for (let col = 1; col <= row; col++) {
@@ -25,6 +27,15 @@ class TriangleGraph extends React.Component {
     this.setState({ dots });
   }
 
+  async fetchDonationPercentage() {
+    try {
+      const response = await axios.get('http://localhost:3000/donation/percentage');
+      const data = response.data;
+      this.setState({ donationPercentage: data.donationPercentage });
+    } catch (error) {
+      console.error('Error fetching donation percentage:', error.message);
+    }
+  }
   render() {
     const { dots, donationPercentage } = this.state;
     const totalDots = dots.length;
@@ -39,18 +50,16 @@ class TriangleGraph extends React.Component {
       const opacityStyle = {
         opacity: opacity, // Apply opacity effect
         // Adjust positioning for right-angle triangle shape
-        top: `${(12 - dot.col) * 20}px`, // Adjust top position based on the column
+        top: `${(24 - dot.col) * 20}px`, // Adjust top position based on the column
         left: `${dot.row * 20}px`, // Adjust left position based on the row
       };
       return <img key={index} className="dot" style={opacityStyle} src={icon} alt="icon" />;
     });
 
     return (
-      <div className="containers">
-        <div className="centered">
-          <div className="triangle-graph">{dotElements}</div>
-          {/* <h1>pixels donated: {donationPercentage}%</h1> */}
-        </div>
+      <div>
+        <div className="triangle-graph">{dotElements}</div>
+        <h1>pixels donated: {donationPercentage.toFixed(2)}%</h1>
       </div>
     );
   }
