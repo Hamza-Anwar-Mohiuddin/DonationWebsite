@@ -8,7 +8,7 @@
 .Donate-page-top-div{
     background-color: var(--secondary-color);
     margin-top: 2% !important;
-    padding: 2% 10%;
+    padding: 5% 10%;
     display: flex;
     flex-direction: column;
     width: 85vw;
@@ -20,7 +20,7 @@
 }
 
 .Donate-page-top-div p{
-    font-size: 1.1rem;
+    font-size: 90%;
 }
 
 .Donate-page-form-parent-div{
@@ -59,12 +59,15 @@
 .Donate-page-form-field-text{
     width: 40%;
 }
-
+.Donate-page-form-field-text span{
+  text-align: left;
+  font-size: 100%;
+}
 
 .checkbox-label{
     color: black !important;
     font-family: var(--body-font);
-    font-size: 1.1rem;
+    font-size: 1rem;
     font-weight: 600;
 }
 
@@ -98,6 +101,7 @@
     display: flex;
     flex-direction: column;
     width: 60%;
+    align-items: center;
     margin: auto;
     gap: 20px;
   }
@@ -181,4 +185,38 @@
     background-color: #003d82;
   }
   
-  
+  @media only screen and (max-device-width: 880px) {
+    .Donate-page-post-submit-form-parent-div{
+      width: 80vw;
+    }
+    .Donate-page-top-div{
+      width: 95vw;
+    }
+    .Donate-page-form-parent-div{
+      width: 80vw;
+    }
+    .Donate-page-form-parent-div h4{
+
+      font-size: 1.1rem;
+    }
+
+    .Donate-page-form-parent-div p{
+      font-size: 0.8rem;
+      display: flex;
+      flex-direction: column;
+    }
+    .Donate-page-form-field-div{
+      align-items: center;
+      display: flex;
+      flex-direction: column;
+    }
+    .Donate-page-form-field-text{
+      width: 100%;
+  }
+  .donation-details{
+    width: 100%;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+  }
+  }

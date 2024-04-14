@@ -19,6 +19,7 @@ function Donate() {
   const [message, setMessage] = useState('');
   const [isSubmitEnabled, setIsSubmitEnabled] = useState(false);
   const [isLoading, setIsLoading] = useState(false); // State to manage loading indicator
+  const [error, seterror] = useState('')
 
   const ClusterPixels = "Cluster Of Pixels";
   const OnePixel = "One Pixel";
@@ -56,20 +57,27 @@ function Donate() {
   const handleSubmit = () => {
     if (selectedOption) {
       setIsFormSubmitted(true);
+      seterror('');
     } else {
-      alert("Kindly select some value");
+      seterror("Kindly select some value");
     }
   };
-
+  
   const handleSubmitform = () => {
     if (selectedOption && name && message) {
+      const wordCount = message.trim().split(/\s+/).length;
+      if (wordCount > 100) {
+        seterror("Message should not exceed 100 words.");
+        return; // Exit early if message exceeds word limit
+      }
+  
       let postData = {
         selectedOption: selectedOption,
         amount: amount,
         name: name,
         message: message
       };
-
+  
       if (selectedOption === OnePixel) {
         postData.numPixels = 1;
       } else if (selectedOption === FullFlag) {
@@ -77,19 +85,19 @@ function Donate() {
       } else if (selectedOption === ClusterPixels) {
         postData.numPixels = numPixels;
       }
-
+  
       setIsLoading(true); // Show loader when submitting form
-
+  
       axios.post('http://localhost:3000/donate', postData)
         .then(response => {
           // Introduce a delay of 2 seconds before processing the response
           setTimeout(() => {
             setIsLoading(false); // Hide loading indicator
-
+  
             if (response.status === 201) {
               console.log('Donation submitted successfully!');
               setIsFormSubmitted(true);
-
+  
               // Hide loader and show alert
               // alert("Form submitted successfully!");
               setIsFormSubmitted(false);
@@ -104,12 +112,13 @@ function Donate() {
         .catch(error => {
           setIsLoading(false); // Hide loading indicator if there's an error
           console.error('Error submitting donation:', error);
-          alert('Failed to submit donation. Please try again.');
+          seterror('Failed to submit donation. Please try again.');
         });
     } else {
-      alert("Kindly select some value");
+      seterror("Kindly select some value or fill in all fields.");
     }
   };
+  
 
 
   const handleReturnToForm = () => {
@@ -241,7 +250,7 @@ function Donate() {
             </div>
           </div>
           <div className='Donate-page-form-submit'>
-            <Button onClick={handleSubmit} disabled={!isSubmitEnabled}>Submit</Button>
+            <Button style={{fontSize:'80%'}} onClick={handleSubmit} disabled={!isSubmitEnabled}>Submit</Button>
           </div>
         </div>
       ) : (
@@ -256,12 +265,14 @@ function Donate() {
           </div>
           <div className='Donate-page-post-submit-form'>
             <TextField
+            style={{width:'120%'}}
               id="name"
               label="Name"
               value={name}
               onChange={(e) => setName(e.target.value)}
             />
             <TextField
+            style={{width:'120%'}}
               id="message"
               label={`Message (Up to 100 words${message.trim().length > 0 ? ` - ${message.trim().split(/\s+/).length}` : ''})`}
               multiline
@@ -278,10 +289,14 @@ function Donate() {
                   document.getElementById('message-label').style.color = 'inherit';
                 }
               }}
+              
             />
+            {error && <div style={{color:'red'}}>
+              {error}
+              </div>}
             <div className="form-submit-form">
-              <Button variant="contained" onClick={handleReturnToForm}>Return to Form</Button>
-              <Button variant="contained" onClick={handleSubmitform}>Submit</Button>
+              <Button style={{fontSize:'80%'}} variant="contained" onClick={handleReturnToForm}>Return to Form</Button>
+              <Button style={{fontSize:'80%'}} variant="contained" onClick={handleSubmitform}>Submit</Button>
             </div>
           </div>
         </div>
