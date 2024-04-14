@@ -25,8 +25,23 @@ function getDonors(callback) {
 
   connection.query(sql, callback);
 }
+function getTotalDonationAmount(callback) {
+  const sql = `SELECT SUM(amount) AS totalAmount FROM donations`;
+
+  connection.query(sql, (error, results) => {
+    if (error) {
+      callback(error);
+      return;
+    }
+
+    const totalAmount = results[0].totalAmount || 0;
+    console.log(totalAmount) // if no donations yet, return 0
+    callback(null, totalAmount);
+  });
+}
 
 module.exports = {
   submitDonation,
-  getDonors
+  getDonors,
+  getTotalDonationAmount
 };

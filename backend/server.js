@@ -15,6 +15,8 @@ app.use(bodyParser.json());
 // Routes
 app.post('/donate', donationController.submitDonation);
 app.get('/donors', donationController.getDonors); // New route for fetching donors
+app.get('/donation/percentage', donationController.getDonationPercentage); 
+app.get('/donationStatus', donationController.getDonationStatus);
 
 // Start the server
 app.listen(PORT, () => {
