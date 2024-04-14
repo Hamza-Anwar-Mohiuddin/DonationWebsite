@@ -14,7 +14,7 @@ class TriangleGraph extends React.Component {
   componentDidMount() {
     // Generate dots in a triangular pattern
     const dots = [];
-    const rows = 24; // Number of rows in the triangle
+    const rows = 15; // Reduce the number of rows for a smaller graph
     let count = 0;
     for (let row = 1; row <= rows; row++) {
       for (let col = 1; col <= row; col++) {
@@ -39,16 +39,18 @@ class TriangleGraph extends React.Component {
       const opacityStyle = {
         opacity: opacity, // Apply opacity effect
         // Adjust positioning for right-angle triangle shape
-        top: `${(24 - dot.col) * 20}px`, // Adjust top position based on the column
+        top: `${(12 - dot.col) * 20}px`, // Adjust top position based on the column
         left: `${dot.row * 20}px`, // Adjust left position based on the row
       };
       return <img key={index} className="dot" style={opacityStyle} src={icon} alt="icon" />;
     });
 
     return (
-      <div>
-        <div className="triangle-graph">{dotElements}</div>
-        <h1>pixels donated: {donationPercentage}%</h1>
+      <div className="containers">
+        <div className="centered">
+          <div className="triangle-graph">{dotElements}</div>
+          {/* <h1>pixels donated: {donationPercentage}%</h1> */}
+        </div>
       </div>
     );
   }

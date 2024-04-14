@@ -1,6 +1,21 @@
+.containers {
+  background-color: slategrey;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-top: 7%;
+  height: 60vh; /* Adjust as needed */
+}
+
+.centered {
+  text-align: center;
+}
+
 .triangle-graph {
-  width: 480px; /* Adjust width according to your needs */
-  height: 480px; /* Adjust height according to your needs */
+  max-width: 100%; /* Ensure it doesn't exceed the container width */
+  max-height: 100%; /* Ensure it doesn't exceed the container height */
+  width: 300px; /* Adjust width according to your needs */
+  height: 300px; /* Adjust height according to your needs */
   position: relative;
 }
 
