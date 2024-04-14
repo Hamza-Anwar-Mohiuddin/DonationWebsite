@@ -1,0 +1,11 @@
+.triangle-graph {
+  width: 480px; /* Adjust width according to your needs */
+  height: 480px; /* Adjust height according to your needs */
+  position: relative;
+}
+
+.dot {
+  position: absolute;
+  width: 20px; /* Adjust width according to your needs */
+  height: 20px; /* Adjust height according to your needs */
+}
