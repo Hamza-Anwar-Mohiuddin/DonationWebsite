@@ -1,23 +1,13 @@
-/* Add this CSS in your global CSS file or component-specific CSS file */
+.donors-container {
+  margin: 20px auto;
+  width: 80%;
+}
 
-.donors-table {
-    width: 100%;
-    border-collapse: collapse;
-  }
-  
-  .donors-table th,
-  .donors-table td {
-    border: 1px solid #ddd;
-    padding: 8px;
-    text-align: left;
-  }
-  
-  .donors-table th {
-    background-color: #f2f2f2;
-    font-weight: bold;
-  }
-  
-  .donors-table tbody tr:nth-child(even) {
-    background-color: #f2f2f2;
-  }
-  
+.MuiTableCell-root {
+  padding: 16px; /* Adjust padding as needed */
+  font-size: 0.875rem; /* Material Design font size */
+}
+
+.MuiTableHead-root {
+  background-color: #f5f5f5; /* Light background for headers */
+}

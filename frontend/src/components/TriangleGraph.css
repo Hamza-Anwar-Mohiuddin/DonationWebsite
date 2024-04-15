@@ -1,19 +1,15 @@
-.containers {
-  background-color: slategrey;
+.triangle-container {
   display: flex;
   justify-content: center;
   align-items: center;
-  padding-top: 7%;
-  height: 60vh; /* Adjust as needed */
-}
-
-.centered {
-  text-align: center;
+  background-color: slategrey;
+  height: 50vh;
+  padding-top: 6rem;
 }
 
 .triangle-graph {
-  max-width: 100%; /* Ensure it doesn't exceed the container width */
-  max-height: 100%; /* Ensure it doesn't exceed the container height */
+  max-width: 100%;
+  max-height: 100%;
   width: 300px; /* Adjust width according to your needs */
   height: 300px; /* Adjust height according to your needs */
   position: relative;

@@ -4,6 +4,7 @@ function Home() {
   return (
     <>
     <TriangleGraph />
+    <h1>All other sections will appear here</h1>
 
     </>
   )
